@@ -11,75 +11,99 @@
 [![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/)
 
-[![Deploy](https://img.shields.io/badge/🌐%20Deployed%20on-Render-46E3B7?style=for-the-badge)](https://backendpuntored.onrender.com)
+[![Deploy](https://img.shields.io/badge/🌐%20Live%20en-Render-46E3B7?style=for-the-badge)](https://backendpuntored.onrender.com)
 
 </div>
 
 ---
 
-## 📋 Descripción
+## 📋 Descripción del Proyecto
 
-API RESTful desarrollada con **NestJS + TypeScript** como prueba técnica backend para **Puntored**. El sistema implementa un módulo de recargas móviles con autenticación JWT, aplicando principios de **Domain-Driven Design (DDD)**, arquitectura por capas e ingeniería segura.
+Este proyecto corresponde al desarrollo del módulo inicial de un portal transaccional para **recargas móviles**, desarrollado como prueba técnica backend para **Puntored**.
 
-### ✅ Funcionalidades
+Se construyó una API RESTful utilizando **NestJS + TypeScript**, aplicando principios de:
 
-| Módulo | Descripción |
-|--------|-------------|
-| 🔐 **Autenticación** | Login con JWT, guards en endpoints protegidos |
-| 📱 **Recargas** | Compra de recargas con validaciones de negocio |
+- 🧩 Domain-Driven Design (DDD)
+- 🔒 Ingeniería Segura
+- 🏗️ Arquitectura por capas
+- ✅ Buenas prácticas de desarrollo backend
+
+### El sistema permite
+
+| Funcionalidad | Descripción |
+|--------------|-------------|
+| 🔐 **Autenticación** | Registro e inicio de sesión mediante JWT |
+| 📱 **Recargas** | Compra de recargas móviles con restricciones de negocio |
 | 📜 **Historial** | Consulta de transacciones del usuario autenticado |
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+| Tecnología | Uso |
+|------------|-----|
+| **Node.js** | Runtime |
+| **NestJS + Express** | Framework principal |
+| **TypeScript** | Tipado estático |
+| **TypeORM** | ORM para base de datos |
+| **PostgreSQL + Docker** | Base de datos relacional |
+| **JWT** | Autenticación stateless |
+| **class-validator** | Validación de entradas |
+| **Jest** | Unit Testing |
+| **Supertest** | E2E Testing |
 
 ---
 
 ## 🏗️ Arquitectura (DDD)
 
+El proyecto sigue una estructura inspirada en **Domain-Driven Design**:
+
 ```
 src/
-├── domain/           # Entidades y reglas de negocio puras
-├── application/      # Casos de uso y orquestación
-├── infrastructure/   # Controladores, ORM y repositorios
-├── auth/             # Autenticación y JWT
-└── database/         # Configuración TypeORM y migraciones
+│
+├── domain/          → Entidades y reglas de negocio
+├── application/     → Casos de uso
+├── infrastructure/  → Controladores, ORM, repositorios
+├── auth/            → Autenticación y JWT
+└── database/        → Configuración TypeORM y migraciones
 ```
 
 | Capa | Responsabilidad |
 |------|----------------|
-| **Domain** | Lógica pura de negocio, sin dependencias externas |
+| **Domain** | Lógica pura de negocio |
 | **Application** | Orquestación de casos de uso |
-| **Infrastructure** | HTTP, persistencia, JWT |
-| **Database** | Configuración y migraciones con TypeORM |
+| **Infrastructure** | HTTP, base de datos, JWT |
+| **Database** | Persistencia con TypeORM |
 
 ---
 
-## 🛠️ Tecnologías
+## 🔐 Seguridad
 
-- **Runtime:** Node.js
-- **Framework:** NestJS + Express
-- **Lenguaje:** TypeScript
-- **ORM:** TypeORM
-- **Base de datos:** PostgreSQL (Docker local / Render producción)
-- **Auth:** JWT + Guards
-- **Validación:** class-validator
-- **Testing:** Jest (unit) + Supertest (E2E)
+- ✅ Uso de **JWT** para autenticación
+- ✅ **Guards** para proteger endpoints
+- ✅ Variables sensibles manejadas con `.env`
+- ✅ Validación estricta con **class-validator**
+- ✅ No se usa `synchronize` en producción
+- ✅ **Migraciones** para control estructural
 
 ---
 
-## ⚙️ Instalación y Configuración
+## ⚙️ Configuración del Proyecto
 
-### 1. Clonar el repositorio
+### 1️⃣ Clonar repositorio
 
 ```bash
 git clone https://github.com/SebasAcosta77/BackendPuntored.git
 cd BackendPuntored
 ```
 
-### 2. Instalar dependencias
+### 2️⃣ Instalar dependencias
 
 ```bash
 npm install
 ```
 
-### 3. Configurar variables de entorno
+### 3️⃣ Configurar variables de entorno
 
 Crear archivo `.env` en la raíz del proyecto:
 
@@ -96,7 +120,7 @@ JWT_SECRET=super_secret_key
 JWT_EXPIRES_IN=1h
 ```
 
-### 4. Levantar base de datos con Docker
+### 4️⃣ Levantar base de datos con Docker
 
 ```bash
 docker compose up -d
@@ -104,21 +128,29 @@ docker compose up -d
 
 > El contenedor expone PostgreSQL en el puerto `5432`.
 
-### 5. Ejecutar el proyecto
+### 5️⃣ Ejecutar el proyecto
 
 ```bash
 npm run start:dev
 ```
 
-La API estará disponible en: **http://localhost:3550**
+La API estará disponible en: **`http://localhost:3550`**
 
 ---
 
 ## 🔌 Endpoints
 
-### 🔑 Autenticación
+### 🔑 Register
 
-#### `POST /auth/login`
+```
+POST /auth/register
+```
+
+### 🔑 Login
+
+```
+POST /auth/login
+```
 
 **Request:**
 ```json
@@ -131,7 +163,7 @@ La API estará disponible en: **http://localhost:3550**
 **Response:**
 ```json
 {
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "access_token": "JWT_TOKEN"
 }
 ```
 
@@ -139,7 +171,10 @@ La API estará disponible en: **http://localhost:3550**
 
 ### 📱 Comprar Recarga
 
-#### `POST /recharges/buy` 🔒 *Requiere JWT*
+```
+POST /recharges/buy
+```
+> 🔒 Requiere token JWT
 
 **Request:**
 ```json
@@ -148,6 +183,13 @@ La API estará disponible en: **http://localhost:3550**
   "phoneNumber": "3101234567"
 }
 ```
+
+**Reglas de negocio:**
+
+| Campo | Validación |
+|-------|-----------|
+| `amount` | Mínimo `1,000` / Máximo `100,000` |
+| `phoneNumber` | Inicia en `3`, exactamente `10 dígitos`, solo números |
 
 **Response:**
 ```json
@@ -160,15 +202,14 @@ La API estará disponible en: **http://localhost:3550**
 }
 ```
 
-**Reglas de negocio:**
-- 💰 Monto mínimo: `1,000` | Monto máximo: `100,000`
-- 📞 El número debe iniciar en `3`, tener exactamente `10 dígitos` y ser solo numérico
-
 ---
 
 ### 📜 Historial de Recargas
 
-#### `GET /recharges/history` 🔒 *Requiere JWT*
+```
+GET /recharges/history
+```
+> 🔒 Requiere token JWT
 
 **Response:**
 ```json
@@ -194,7 +235,7 @@ npm run test
 ```
 
 Cobertura:
-- ✅ Validación de montos (mínimo y máximo)
+- ✅ Validación de montos
 - ✅ Validación de número telefónico
 - ✅ Casos límite
 
@@ -204,69 +245,64 @@ Cobertura:
 npm run test:e2e
 ```
 
-Casos cubiertos:
-- ✅ `2xx` → Flujos exitosos
-- ✅ `4xx` → Errores de validación
-- ✅ `401` → Acceso sin token
-- ✅ `500` → Errores controlados
-
----
-
-## 🌍 Despliegue en Producción
-
-La aplicación está desplegada en **Render** con base de datos PostgreSQL gestionada.
-
-| Endpoint | URL |
-|----------|-----|
-| Login | `POST https://backendpuntored.onrender.com/auth/login` |
-| Comprar recarga | `POST https://backendpuntored.onrender.com/recharges/buy` |
-| Historial | `GET https://backendpuntored.onrender.com/recharges/history` |
-
----
-
-## 🔐 Seguridad
-
-- **JWT** para autenticación stateless
-- **Guards** en todos los endpoints protegidos
-- **Variables sensibles** gestionadas con `.env` (nunca en el repositorio)
-- **class-validator** para validación estricta de entrada
-- **Sin `synchronize` en producción** — control estructural con migraciones
+| Código | Escenario |
+|--------|-----------|
+| `2xx` | Casos exitosos |
+| `4xx` | Errores de validación |
+| `401` | Sin token |
+| `500` | Errores simulados |
 
 ---
 
 ## 📌 Decisiones Técnicas
 
-| Decisión | Justificación |
-|----------|---------------|
-| **NestJS** | Arquitectura modular, escalable y con soporte nativo para DDD |
-| **PostgreSQL + Docker** | Consistencia entre entornos y facilidad de configuración local |
-| **Migraciones TypeORM** | Evita riesgos de `synchronize: true` en producción |
-| **Arquitectura DDD** | Mejora mantenibilidad, escalabilidad y testabilidad |
-| **JWT + Guards** | Protección robusta y desacoplada de los endpoints |
+| # | Decisión | Justificación |
+|---|----------|---------------|
+| 1️⃣ | **NestJS** | Arquitectura modular, escalable y estructurada |
+| 2️⃣ | **PostgreSQL + Docker** | Portabilidad y consistencia entre entornos |
+| 3️⃣ | **Migraciones TypeORM** | Evita riesgos de `synchronize` en producción |
+| 4️⃣ | **Arquitectura DDD** | Mejora mantenibilidad, testeo y escalabilidad |
+| 5️⃣ | **JWT + Guards** | Implementación segura para protección de rutas |
+
+---
+
+## 🌍 Despliegue
+
+La aplicación está desplegada en **Render** con base de datos PostgreSQL gestionada:
+
+| Endpoint | URL |
+|----------|-----|
+| 🔑 Register | [`/auth/register`](https://backendpuntored.onrender.com/auth/register) |
+| 🔑 Login | [`/auth/login`](https://backendpuntored.onrender.com/auth/login) |
+| 📱 Comprar Recarga | [`/recharges/buy`](https://backendpuntored.onrender.com/recharges/buy) |
+| 📜 Historial | [`/recharges/history`](https://backendpuntored.onrender.com/recharges/history) |
+
+> **Base URL:** `https://backendpuntored.onrender.com`
 
 ---
 
 ## 🎯 Niveles Alcanzados
 
-- [x] **Nivel 0** – Configuración base y estructura del proyecto
+- [x] **Nivel 0** – Configuración base del proyecto
 - [x] **Nivel 1** – Endpoints funcionales con validaciones
 - [x] **Nivel 2** – PostgreSQL + Docker
 - [x] **Nivel 3** – Testing (Unit + E2E)
-- [x] **Nivel 4** – Arquitectura DDD
+- [x] **Nivel 4** *(Opcional)* – Arquitectura DDD
 
 ---
 
-## 👨‍💻 Autor
+## 🏁 Conclusión
 
-**Juan Sebastián Acosta Quiroz**  
-Ingeniero de Sistemas
-
-[![GitHub](https://img.shields.io/badge/GitHub-SebasAcosta77-181717?style=flat-square&logo=github)](https://github.com/SebasAcosta77)
+El sistema cumple los requisitos funcionales solicitados, aplicando principios de **seguridad**, **arquitectura limpia** y **buenas prácticas de ingeniería backend**, garantizando escalabilidad, mantenibilidad y calidad del código.
 
 ---
 
 <div align="center">
 
-*Desarrollado como prueba técnica para **Puntored** · 2026*
+**👨‍💻 Juan Sebastián Acosta Quiroz** · Ingeniero de Sistemas
+
+[![GitHub](https://img.shields.io/badge/GitHub-SebasAcosta77-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/SebasAcosta77)
+
+*Prueba Técnica Backend · Puntored · 2026*
 
 </div>
